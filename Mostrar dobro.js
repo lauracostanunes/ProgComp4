@@ -11,5 +11,4 @@ function main () {
     mostrarDobro(a)
     console.log(`O quadrado do número informado é: ${quadrado(a)}`)
 }
-
 main()
