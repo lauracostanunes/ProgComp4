@@ -35,6 +35,7 @@ function buscarSalario(funcionarios, nome) {
     alert(`Funcionário não encontrado!`);
 }
 function atualizarCargo(funcionarios, nome, novoCargo) {
+    let salarioAntigo = 0
     for (let funcionario of funcionarios) {
         if (funcionario.nome.toLowerCase() === nome.toLowerCase()) {
             let salarioAntigo = funcionario.salario;
@@ -57,10 +58,13 @@ function removerFuncionario(funcionarios, nome) {
     }
     alert(`Funcionário não encontrado!`);
 }
-function calcularMediaSalarial(funcionarios) {
-    if (funcionarios.length === 0) return 0;   
-    let total = funcionarios.reduce((acc, func) => acc + func.salario, 0);
-    return total / funcionarios.length;
+function mediaSalarial(funcionario){
+    let salarios = 0
+    for(let i = 0; i < funcionario.length; i++){
+        salarios+=funcionario[i].salario
+    }
+    media = salarios/funcionarios.length
+    return media;
 }
 function main() {
     let funcionarios = [];
