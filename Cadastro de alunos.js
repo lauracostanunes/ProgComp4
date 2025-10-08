@@ -23,7 +23,7 @@ function cadastrarNovo(alunos) {
 }
 function removeAluno (alunos, nomeRemove) {
     for (let i = 0; i < alunos.length; i++) // Splice precisa do índice
-        if (aluno[i].nome == nome) { // in ou off não serfve
+        if (aluno[i].nome.toLowerCase() == nome.toLowerCase()) { // in ou off não serfve
             alunos.splice(i, 1) // Remove do vetor
             alert(`Aluno removido com sucesso`)
             return // Sai da função
