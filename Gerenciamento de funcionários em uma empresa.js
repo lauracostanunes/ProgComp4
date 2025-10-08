@@ -37,8 +37,11 @@ function buscarSalario(funcionarios, nome) {
 function atualizarCargo(funcionarios, nome, novoCargo) {
     for (let funcionario of funcionarios) {
         if (funcionario.nome.toLowerCase() === nome.toLowerCase()) {
+            let salarioAntigo = funcionario.salario;
             funcionario.cargo = novoCargo;
-            alert(`Cargo atualizado com sucesso!`);
+            let novoSalario = Number(prompt(`Informe o novo salário para o cargo ${novoCargo}: `, funcionario.salario));
+            funcionario.salario = novoSalario;
+            alert(`Cargo e salário atualizados com sucesso!`);
             return;
         }
     }
