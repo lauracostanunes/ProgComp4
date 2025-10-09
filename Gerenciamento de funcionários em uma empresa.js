@@ -58,13 +58,35 @@ function removerFuncionario(funcionarios, nome) {
     }
     alert(`Funcionário não encontrado!`);
 }
-function mediaSalarial(funcionario){
-    let salarios = 0
-    for(let i = 0; i < funcionario.length; i++){
-        salarios+=funcionario[i].salario
+function calcularMediaSalarial(funcionarios) {
+    let salarios = 0;
+    for (let funcionario of funcionarios) {
+        salarios += funcionario.salario;
     }
-    media = salarios/funcionarios.length
-    return media;
+    return salarios / funcionarios.length;
+}
+function promoverFuncionarios(funcionarios) {
+    const media = calcularMediaSalarial(funcionarios);
+    let promovidos = 0;   
+    for (let funcionario of funcionarios) {
+        if (funcionario.salario < media) {
+            funcionario.cargo = "Analista Júnior";
+            funcionario.salario *= 1.15;
+            promovidos++;
+        }
+    }
+    alert(`${promovidos} funcionário(s) promovido(s) para Analista Júnior com 15% de aumento!`);
+}
+function encontrarMaiorSalario(funcionarios) {
+    if (funcionarios.length === 0) return null;
+    
+    let maior = funcionarios[0];
+    for (let i = 1; i < funcionarios.length; i++) {
+        if (funcionarios[i].salario > maior.salario) {
+            maior = funcionarios[i];
+        }
+    }
+    return maior;
 }
 function main() {
     let funcionarios = [];
@@ -72,15 +94,17 @@ function main() {
     let opcao;
     do {
         opcao = Number(prompt(
-            `SISTEMA DE GERENCIAMENTO\n
-1 - Cadastrar funcionário\n
-2 - Listar funcionários\n
-3 - Aumentar salários em 10%\n
-4 - Buscar salário por nome\n
-5 - Atualizar cargo\n
-6 - Remover funcionário\n
-7 - Média salarial da empresa\n
-8 - Sair`
+`SISTEMA DE GERENCIAMENTO
+1 - Cadastrar funcionário
+2 - Listar funcionários
+3 - Aumentar salários em 10%
+4 - Buscar salário por nome
+5 - Atualizar cargo
+6 - Remover funcionário
+7 - Média salarial da empresa
+8 - Promover funcionários abaixo da média
+9 - Exibir funcionário com maior salário
+10 - Sair`
         ));
         switch(opcao) {
             case 1:
@@ -110,11 +134,22 @@ function main() {
                 alert(`Média salarial: R$${media.toFixed(2)}`);
                 break;
             case 8:
+                promoverFuncionarios(funcionarios);
+                break;
+            case 9:
+                const maiorSalario = encontrarMaiorSalario(funcionarios);
+                if (maiorSalario) {
+                    alert(`Funcionário com maior salário:\nNome: ${maiorSalario.nome}\nCargo: ${maiorSalario.cargo}\nSalário: R$${maiorSalario.salario}`);
+                } else {
+                    alert(`Não há funcionários cadastrados!`);
+                }
+                break;
+            case 10:
                 alert(`Programa encerrado!`);
                 break;
             default:
                 alert(`Opção inválida!`);
         }
-    } while (opcao !== 8);
+    } while (opcao !== 10);
 }
 main();
