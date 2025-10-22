@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR"> <!-- Define o idioma da página -->
+<head>
+  <meta charset="UTF-8"> <!-- Suporta acentuação -->
+  <title>Galeria de Fotos</title> <!-- Título da aba do navegador -->
+  <style>
+    body { 
+      font-family: Arial, sans-serif; /* Fonte usada */
+      text-align: center; /* Centraliza o conteúdo */
+      background-color: #f4f4f4; /* Cor de fundo */
+      margin: 0; 
+      padding: 20px; 
+    }
+    h1 { color: #333; } /* Cor do título principal */
+    button { 
+      background-color: #007BFF; /* Cor azul do botão */
+      color: white; /* Texto branco */
+      border: none; /* Sem borda */
+      padding: 10px 20px; /* Espaçamento interno */
+      font-size: 16px; /* Tamanho da fonte */
+      border-radius: 5px; /* Bordas arredondadas */
+      cursor: pointer; /* Muda o cursor ao passar por cima */
+      margin-bottom: 20px; /* Espaço abaixo do botão */
+    }
+    button:hover { background-color: #0056b3; } /* Cor ao passar o mouse */
+    #galeria {
+      display: flex; /* Exibe os cards lado a lado */
+      flex-wrap: wrap; /* Permite quebrar linha */
+      justify-content: center; /* Centraliza os cards */
+      gap: 15px; /* Espaço entre eles */
+    }
+    .card {
+      background-color: white; /* Fundo do card */
+      border: 1px solid #ccc; /* Borda cinza clara */
+      border-radius: 8px; /* Bordas arredondadas */
+      width: 180px; /* Largura do card */
+      padding: 10px; /* Espaço interno */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra leve */
+    }
+    .card img {
+      width: 100%; /* Imagem ocupa toda a largura */
+      border-radius: 5px; /* Bordas arredondadas na imagem */
+    }
+    .card p {
+      font-size: 14px; /* Tamanho do título */
+      color: #333; /* Cor do texto */
+      margin-top: 8px; /* Espaço acima do texto */
+    }
+  </style>
+</head>
+<body>
+  <h1>Galeria de Fotos</h1> <!-- Título principal -->
+   <!-- Campo para o usuário digitar a quantidade -->
+   <input type="number" id="quantidade" min="1" max="100" placeholder="Qtd. fotos" value="10">
+   <!-- Div onde as fotos serão exibidas -->
+  <button onclick="carregarGaleria()">Carregar Galeria</button> <!-- Botão que chama a função -->
+  <div id="galeria"></div> <!-- Div onde as fotos serão exibidas -->
+  <script>
+    async function carregarGaleria() { // Função que busca e exibe as fotos
+      try {
+        const resposta = await fetch("https://jsonplaceholder.typicode.com/photos?_limit=10"); // Faz requisição GET na API
+        const fotos = await resposta.json(); // Converte a resposta em JSON (array de objetos)
+        const galeria = document.getElementById("galeria"); // Pega a div onde os cards serão colocados
+        galeria.innerHTML = ""; // Limpa o conteúdo antes de adicionar novos cards
+        for (let i = 0; i < fotos.length; i++) { // Percorre as 10 fotos retornadas
+          const foto = fotos[i]; // Guarda a foto atual
+          const card = document.createElement("div"); // Cria uma div
+          card.className = "card"; // Define a classe CSS "card"
+          card.innerHTML = `
+            <img src="${foto.thumbnailUrl}" alt="${foto.title}"> <!-- Mostra a miniatura -->
+            <p>${foto.title}</p> <!-- Mostra o título da foto -->
+          `;
+          galeria.appendChild(card); // Adiciona o card na galeria
+        }
+      } catch (erro) { // Caso ocorra um erro...
+        alert("Não foi possível carregar as fotos da API."); // Mostra alerta ao usuário
+        console.error("Erro ao consultar fotos:", erro); // Mostra o erro no console
+      }
+    }
+  </script>
+</body>
+</html>

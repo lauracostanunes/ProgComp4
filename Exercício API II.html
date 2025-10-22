@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title> Galeria de Fotos </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .card {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 180px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .card p {
+      font-size: 14px;
+      color: #333;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Galeria de Fotos</h1>
+  <input type="number" id="quantidade" min="1" max="100" placeholder="Qtd. fotos" value="10">
+  <button onclick="carregarGaleria()">Carregar Galeria</button>
+  <div id="galeria"></div>
+  <script>
+    async function carregarGaleria() {
+      try {
+        const resposta = await fetch("https://jsonplaceholder.typicode.com/photos?_limit=10");
+        const fotos = await resposta.json();
+        const galeria = document.getElementById("galeria");
+        galeria.innerHTML = "";
+        for (let i = 0; i < fotos.length; i++) {
+          const foto = fotos[i];
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${foto.thumbnailUrl}" alt="${foto.title}">
+            <p>${foto.title}</p>
+          `;
+          galeria.appendChild(card);
+        }
+      } catch (erro) {
+        alert("Não foi possível carregar as fotos da API.");
+        console.error("Erro ao consultar fotos:", erro);
+      }
+    }
+  </script>
+</body>
+</html>
