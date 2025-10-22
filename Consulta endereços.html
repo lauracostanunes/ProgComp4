@@ -1,0 +1,48 @@
+<!DOCTYPE html> <!-- Define o tipo de documento como HTML5 -->
+<html lang="pt-BR"> <!-- Define o idioma da página como português do Brasil -->
+<head>
+  <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+  <title>Consulta de Endereços</title> <!-- Título exibido na aba do navegador -->
+</head>
+<body>
+  <h1>Consulta de Endereços</h1> <!-- Título principal da página -->
+  <button onclick="consultarEnderecos()">Consultar Endereços</button> 
+  <!-- Botão que chama a função ao ser clicado -->
+  <ul id="listaEnderecos"></ul> 
+  <!-- Lista onde os nomes e endereços serão exibidos -->
+  <script>
+    async function consultarEnderecos() { 
+      // Função assíncrona responsável por buscar e exibir os dados da API
+      // async = permite usar 'await' dentro dela (aguardar respostas sem travar o código)
+      try {
+        const resposta = await fetch("https://jsonplaceholder.typicode.com/users"); 
+        // Faz a requisição HTTP GET para a API pública
+        const usuarios = await resposta.json(); 
+        // Converte a resposta em formato JSON (objeto JavaScript)
+        const lista = document.getElementById("listaEnderecos"); 
+        // Pega o elemento <ul> do HTML
+        lista.innerHTML = ""; 
+        // Limpa o conteúdo da lista antes de adicionar novos itens
+        // Percorre o array de usuários retornado pela API
+        for (let i = 0; i < usuarios.length; i++) {
+          const usuario = usuarios[i]; // Armazena o usuário atual da iteração
+          // Monta o endereço completo no formato solicitado
+          const enderecoCompleto = `${usuario.address.street}, ${usuario.address.city} - ${usuario.address.zipcode}`;
+          // Cria um novo elemento de lista (<li>)
+          const li = document.createElement("li");
+          // Define o conteúdo do item de lista
+          li.innerHTML = 
+          `<strong>Nome:</strong> ${usuario.name}<br>
+           <strong>Endereço:</strong> ${enderecoCompleto}`;
+          // Adiciona o <li> à lista <ul>
+          lista.appendChild(li);
+        }
+      } catch (erro) {
+        // Caso ocorra um erro (como falha na conexão), mostra mensagem na tela
+        alert("Não foi possível carregar os dados da API.");
+        console.error("Erro ao consultar endereços:", erro); 
+      }
+    }
+  </script>
+</body>
+</html>

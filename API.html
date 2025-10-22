@@ -1,31 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html> <!-- Define o tipo de documento como HTML5 -->
+<html lang="pt-BR"> <!-- Define o idioma da página como português do Brasil -->
 <head>
-  <meta charset="UTF-8">
-  <title>Exemplo de Consumo de API</title>
+  <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 (permite acentos, cedilha, etc.) -->
+  <title> Exemplo de Consumo de API </title> <!-- Título da aba do navegador -->
 </head>
 <body>
-  <h1> Lista de Usuários </h1>
-  <button onclick="carregarUsuarios()">Carregar Dados</button>
-  <ul id="listaUsuarios"></ul>
-  <script>
-    async function carregarUsuarios() {
-      try {
-        const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
-        const usuarios = await resposta.json();
-        const lista = document.getElementById("listaUsuarios");
-        lista.innerHTML = ""; // limpa lista
-        for (let i = 0; i < usuarios.length; i++) {
-          const li = document.createElement("li");
-          li.textContent = `${usuarios[i].name} - ${usuarios[i].email}`;
-          lista.appendChild(li);
-        }
-      } catch (erro) {
-        console.error("Erro ao carregar usuários:", erro);
-        alert("Não foi possível carregar os dados da API.");
-      }
-    }
-  </script>
+  <h1> Lista de Usuários </h1> <!-- Título principal da página -->
+  <button onclick="carregarUsuarios()"> Carregar Dados </button> <!-- Botão que, quando clicado, chama a função carregarUsuarios() -->
+  <ul id="listaUsuarios"></ul> <!-- Lista não ordenada onde os usuários serão exibidos -->
+  <script>
+    async function carregarUsuarios() { // Função assíncrona responsável por buscar e exibir os dados da API
+      // ASYNC = função assíncrona, ou seja, não bloqueia o restante do código enquanto espera por uma operação demorada
+      // (como buscar dados de uma API). Ela libera quem a chamou para fazer outra atividade.
+      try {
+        const resposta = await fetch("https://jsonplaceholder.typicode.com/users"); 
+        // Faz uma requisição HTTP GET para a API de exemplo JSONPlaceholder
+        // AWAIT = aguarda a resposta da API antes de continuar
+        // “Espere essa operação terminar antes de continuar.”
+        const usuarios = await resposta.json(); 
+        // Converte a resposta recebida em formato JSON (JavaScript Object Notation)
+        const lista = document.getElementById("listaUsuarios"); 
+        // Obtém o elemento <ul> do HTML onde os usuários serão listados
+        lista.innerHTML = ""; 
+        // Limpa o conteúdo da lista antes de adicionar novos itens
+        for (let i = 0; i < usuarios.length; i++) { 
+          // Percorre o array de usuários retornado pela API
+          const li = document.createElement("li"); 
+          // Cria um novo elemento de lista (<li>)
+          li.textContent = `${usuarios[i].name} - ${usuarios[i].email}`; 
+          // Define o texto de cada item da lista como "nome - email"
+          lista.appendChild(li); 
+          // Adiciona o item <li> dentro da lista <ul>
+        }
+      } catch (erro) {
+        console.error("Erro ao carregar usuários: ", erro); 
+        // Caso ocorra um erro (ex: falha na conexão), mostra a mensagem de erro no console
+        alert("Não foi possível carregar os dados da API."); 
+        // Mostra um alerta para o usuário informando que houve falha na requisição
+      }
+    }
+  </script>
 </body>
 </html>
-
