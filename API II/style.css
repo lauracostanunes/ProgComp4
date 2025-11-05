@@ -1,0 +1,54 @@
+body {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    background-color: #d6ecff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    margin-top: 40px;
+}
+#mural {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.imagens {
+    background-color: #ffffff;
+    width: 280px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.imagens:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.imagens img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+.imagens p {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 0;
+}
+@media (max-width: 768px) {
+    #mural {
+        flex-direction: column;
+        align-items: center;
+    }
+    .imagens {
+        width: 80%;
+    }
+}
