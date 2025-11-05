@@ -3,7 +3,6 @@ function receberAlunos (nomes) {
         console.log(nomes[i])
     }
 }
-
 function main () {
     let a = [];
     let b = [];
